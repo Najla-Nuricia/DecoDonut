@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -13,17 +12,20 @@ public class ServeValidator : MonoBehaviour
     [SerializeField] private GameObject kitchenCanvas;
     [SerializeField] private GameObject customerCanvas;
 
-
     [Header("Result Panels")]
     [SerializeField] private GameObject congratsPanel;
     [SerializeField] private GameObject youLosePanel;
     [SerializeField] private GameObject endDayPanel;
 
+    [Header("Panel Animations")]
+    [SerializeField] private PanelAnimation congratsAnimation;
+    [SerializeField] private PanelAnimation youLoseAnimation;
+    [SerializeField] private PanelAnimation endDayAnimation;
+
     [Header("Coin UI")]
     [SerializeField] private TMP_Text coinText;
 
     private int coins;
-
     public int Coins => coins;
 
     private void Start()
@@ -33,15 +35,11 @@ public class ServeValidator : MonoBehaviour
 
     public void ValidateOrder()
     {
-        // Ambil customer yang sedang dilayani
         CustomerSO customer = customerManager.CurrentCustomer;
 
         if (customer == null || customer.customerOrder == null)
-        {
             return;
-        }
 
-        // Ambil resep milik customer tersebut
         OrderSO order = customer.customerOrder;
 
         List<IngredientSO> selected =
@@ -68,56 +66,64 @@ public class ServeValidator : MonoBehaviour
             }
         }
 
-        // Berpindah dari dapur ke tampilan hasil customer
         kitchenCanvas.SetActive(false);
         customerCanvas.SetActive(true);
 
-        congratsPanel.SetActive(isCorrect);
-        youLosePanel.SetActive(!isCorrect);
-
         if (isCorrect)
         {
+            youLosePanel.SetActive(false);
+
+            if (congratsAnimation != null)
+                congratsAnimation.PopUp();
+            else
+                congratsPanel.SetActive(true);
+
             coins += order.rewardCoins;
             UpdateCoinUI();
         }
+        else
+        {
+            congratsPanel.SetActive(false);
+
+            if (youLoseAnimation != null)
+                youLoseAnimation.PopUp();
+            else
+                youLosePanel.SetActive(true);
+        }
     }
 
-    
     public void ContinueToNextCustomer()
     {
         congratsPanel.SetActive(false);
         youLosePanel.SetActive(false);
 
         dropZone.ClearIngredients();
-
         customerManager.CompleteCurrentOrder();
 
-        // Tidak ada customer tersisa
         if (customerManager.CurrentCustomer == null)
         {
             kitchenCanvas.SetActive(false);
             customerCanvas.SetActive(true);
 
-            endDayPanel.SetActive(true);
+            if (endDayAnimation != null)
+                endDayAnimation.PopUp();
+            else
+                endDayPanel.SetActive(true);
+
             return;
         }
 
-        // Masih ada customer berikutnya
         endDayPanel.SetActive(false);
+
         kitchenCanvas.SetActive(true);
         customerCanvas.SetActive(true);
     }
 
-
     public void RetryOrder()
     {
-        // Tutup panel hasil kalah
         youLosePanel.SetActive(false);
-
-        // Bersihkan ingredient dari meja
         dropZone.ClearIngredients();
 
-        // Kembali ke dapur tanpa mengganti customer
         customerCanvas.SetActive(false);
         kitchenCanvas.SetActive(true);
     }
@@ -125,8 +131,7 @@ public class ServeValidator : MonoBehaviour
     private void UpdateCoinUI()
     {
         if (coinText != null)
-        {
             coinText.text = coins.ToString();
-        }
     }
 }
+

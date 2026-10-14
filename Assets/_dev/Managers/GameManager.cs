@@ -6,9 +6,36 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CustomerManager customerManager;
     [SerializeField] private OrderManager orderManager;
 
+    [Header("Canvas")]
+    [SerializeField] private GameObject customerCanvas;
+    [SerializeField] private GameObject kitchenCanvas;
+
+    [Header("Bubble Animation")]
+    [SerializeField] private BubbleUI customerBubble;
+    [SerializeField] private BubbleUI kitchenBubble;
+
     private void Start()
     {
         StartDay();
+        ShowCustomerCanvas();
+    }
+
+    public void ShowCustomerCanvas()
+    {
+        customerCanvas.SetActive(true);
+        kitchenCanvas.SetActive(false);
+
+        if (customerBubble != null)
+            customerBubble.ShowBubbles();
+    }
+
+    public void ShowKitchenCanvas()
+    {
+        customerCanvas.SetActive(false);
+        kitchenCanvas.SetActive(true);
+
+        if (kitchenBubble != null)
+            kitchenBubble.ShowBubbles();
     }
 
     public void StartDay()
