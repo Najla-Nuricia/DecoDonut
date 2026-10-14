@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -7,6 +8,7 @@ public class ServeValidator : MonoBehaviour
     [Header("References")]
     [SerializeField] private CustomerManager customerManager;
     [SerializeField] private DonutDropZone dropZone;
+    [SerializeField] private CanvasTransition canvasTransition;
 
     [Header("Canvases")]
     [SerializeField] private GameObject kitchenCanvas;
@@ -21,11 +23,13 @@ public class ServeValidator : MonoBehaviour
     [SerializeField] private PanelAnimation congratsAnimation;
     [SerializeField] private PanelAnimation youLoseAnimation;
     [SerializeField] private PanelAnimation endDayAnimation;
+    [SerializeField] private float resultDelay = 0.75f;
 
     [Header("Coin UI")]
     [SerializeField] private TMP_Text coinText;
 
     private int coins;
+    private bool isShowingResult;
     public int Coins => coins;
 
     private void Start()
@@ -35,6 +39,9 @@ public class ServeValidator : MonoBehaviour
 
     public void ValidateOrder()
     {
+        if (isShowingResult)
+            return;
+
         CustomerSO customer = customerManager.CurrentCustomer;
 
         if (customer == null || customer.customerOrder == null)
@@ -66,34 +73,17 @@ public class ServeValidator : MonoBehaviour
             }
         }
 
-        kitchenCanvas.SetActive(false);
-        customerCanvas.SetActive(true);
+        // Slide dari Kitchen ke Customer
+        canvasTransition.ShowCustomer();
 
-        if (isCorrect)
-        {
-            youLosePanel.SetActive(false);
-
-            if (congratsAnimation != null)
-                congratsAnimation.PopUp();
-            else
-                congratsPanel.SetActive(true);
-
-            coins += order.rewardCoins;
-            UpdateCoinUI();
-        }
-        else
-        {
-            congratsPanel.SetActive(false);
-
-            if (youLoseAnimation != null)
-                youLoseAnimation.PopUp();
-            else
-                youLosePanel.SetActive(true);
-        }
+        isShowingResult = true;
+        StartCoroutine(ShowResultAfterDelay(isCorrect, order.rewardCoins));
     }
 
     public void ContinueToNextCustomer()
     {
+        isShowingResult = false;
+
         congratsPanel.SetActive(false);
         youLosePanel.SetActive(false);
 
@@ -102,21 +92,15 @@ public class ServeValidator : MonoBehaviour
 
         if (customerManager.CurrentCustomer == null)
         {
-            kitchenCanvas.SetActive(false);
-            customerCanvas.SetActive(true);
-
-            if (endDayAnimation != null)
-                endDayAnimation.PopUp();
-            else
-                endDayPanel.SetActive(true);
-
+            ShowEndDayPanel();
             return;
         }
 
-        endDayPanel.SetActive(false);
+        if (endDayPanel != null)
+            endDayPanel.SetActive(false);
 
-        kitchenCanvas.SetActive(true);
-        customerCanvas.SetActive(true);
+        // Customer tetap tampil untuk customer berikutnya.
+        // Tombol menuju dapur memanggil ShowKitchen().
     }
 
     public void RetryOrder()
@@ -124,8 +108,18 @@ public class ServeValidator : MonoBehaviour
         youLosePanel.SetActive(false);
         dropZone.ClearIngredients();
 
-        customerCanvas.SetActive(false);
-        kitchenCanvas.SetActive(true);
+        // Slide dari Customer kembali ke Kitchen
+        canvasTransition.ShowKitchen();
+    }
+
+    public void GoToKitchen()
+    {
+        canvasTransition.ShowKitchen();
+    }
+
+    public void GoToCustomer()
+    {
+        canvasTransition.ShowCustomer();
     }
 
     private void UpdateCoinUI()
@@ -133,5 +127,59 @@ public class ServeValidator : MonoBehaviour
         if (coinText != null)
             coinText.text = coins.ToString();
     }
-}
 
+    private IEnumerator ShowResultAfterDelay(bool isCorrect, int rewardCoins)
+    {
+        yield return new WaitForSeconds(Mathf.Max(0f, resultDelay));
+
+        if (isCorrect)
+        {
+            if (youLosePanel != null)
+                youLosePanel.SetActive(false);
+
+            if (congratsAnimation != null)
+                congratsAnimation.PopUp();
+            else if (congratsPanel != null)
+                congratsPanel.SetActive(true);
+
+            coins += rewardCoins;
+            UpdateCoinUI();
+        }
+        else
+        {
+            if (congratsPanel != null)
+                congratsPanel.SetActive(false);
+
+            if (youLoseAnimation != null)
+                youLoseAnimation.PopUp();
+            else if (youLosePanel != null)
+                youLosePanel.SetActive(true);
+        }
+    }
+
+    private void ShowEndDayPanel()
+    {
+        if (endDayPanel == null && endDayAnimation == null)
+        {
+            Debug.LogError(
+                "ServeValidator: Isi End Day Panel atau End Day Animation di Inspector."
+            );
+            return;
+        }
+
+        if (endDayPanel != null)
+        {
+            Transform parent = endDayPanel.transform.parent;
+            while (parent != null)
+            {
+                parent.gameObject.SetActive(true);
+                parent = parent.parent;
+            }
+
+            endDayPanel.SetActive(true);
+        }
+
+        if (endDayAnimation != null)
+            endDayAnimation.PopUp();
+    }
+}
