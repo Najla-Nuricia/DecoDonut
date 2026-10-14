@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3640e0d6057862c4199dc8f80cb60193, type: 3}
   m_Name: chocoBasic
   m_EditorClassIdentifier: Assembly-CSharp::OrderSO
-  orderName: Basic
+  orderName: chocoBasic
   donutImage: {fileID: 0}
   recipeIngredients:
-  - {fileID: 11400000, guid: df558bb2b8d9a5045a881d37fdc756cf, type: 2}
+  - {fileID: 11400000, guid: c8b2a286b5db945409a452c99df56c0c, type: 2}
   rewardCoins: 10

@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CustomerSO
   customerName: Nilo
   customerImage: {fileID: 0}
-  customerOrder: {fileID: 11400000, guid: 39a786cf08c270a489b781c553df988e, type: 2}
+  customerOrder: {fileID: 11400000, guid: da1f3d17a9c28ad43bba12ba96969be2, type: 2}

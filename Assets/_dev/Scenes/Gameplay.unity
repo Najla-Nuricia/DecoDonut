@@ -3487,6 +3487,7 @@ MonoBehaviour:
   orderBubbleUI: {fileID: 1044102676}
   dailyCustomers:
   - {fileID: 11400000, guid: e274c1cf716b6854fbacc65cd860ee03, type: 2}
+  - {fileID: 11400000, guid: 69b1729cd7933654099c6946caf2dd77, type: 2}
 --- !u!1 &1588226868
 GameObject:
   m_ObjectHideFlags: 0
