@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3640e0d6057862c4199dc8f80cb60193, type: 3}
+  m_Name: chocoBasic
+  m_EditorClassIdentifier: Assembly-CSharp::OrderSO
+  orderName: Basic
+  donutImage: {fileID: 0}
+  recipeIngredients:
+  - {fileID: 11400000, guid: df558bb2b8d9a5045a881d37fdc756cf, type: 2}
+  rewardCoins: 10

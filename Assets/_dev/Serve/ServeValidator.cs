@@ -84,8 +84,7 @@ public class ServeValidator : MonoBehaviour
     {
         isShowingResult = false;
 
-        congratsPanel.SetActive(false);
-        youLosePanel.SetActive(false);
+        HideResultPanels();
 
         dropZone.ClearIngredients();
         customerManager.CompleteCurrentOrder();
@@ -126,6 +125,19 @@ public class ServeValidator : MonoBehaviour
     {
         if (coinText != null)
             coinText.text = coins.ToString();
+    }
+
+    private void HideResultPanels()
+    {
+        if (congratsAnimation != null)
+            congratsAnimation.PopDown();
+        else if (congratsPanel != null)
+            congratsPanel.SetActive(false);
+
+        if (youLoseAnimation != null)
+            youLoseAnimation.PopDown();
+        else if (youLosePanel != null)
+            youLosePanel.SetActive(false);
     }
 
     private IEnumerator ShowResultAfterDelay(bool isCorrect, int rewardCoins)
