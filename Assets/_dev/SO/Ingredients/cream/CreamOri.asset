@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9eafd76292918814ebd7b2b24440e2b0, type: 3}
-  m_Name: DonutChoco
+  m_Name: CreamOri
   m_EditorClassIdentifier: Assembly-CSharp::IngredientSO
-  ingredientName: Donut Chocolate
-  ingredientImage: {fileID: 21300000, guid: ee76c8b0d89ce7f4e8a0942fcda1f4ff, type: 3}
+  ingredientName: Cream Vanilla
+  ingredientImage: {fileID: 21300000, guid: 25f3b890513439b4bb65bb3bd00a74e6, type: 3}

@@ -5,7 +5,7 @@ public class OrderManager : MonoBehaviour
 {
     [Header("UI Elements")]
     [SerializeField] private TMP_Text orderNameUI;
-    [SerializeField] private TMP_Text recipeUI;
+    [SerializeField] private image recipeUI;
 
     public void ShowOrder(OrderSO order)
     {
