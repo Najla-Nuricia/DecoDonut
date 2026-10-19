@@ -116,6 +116,7 @@ public class ServeValidator : MonoBehaviour
 
     public void RetryOrder()
     {
+        isShowingResult = false;
         youLosePanel.SetActive(false);
         dropZone.ClearIngredients();
 
