@@ -136,7 +136,7 @@ public class ServeValidator : MonoBehaviour
     private void UpdateCoinUI()
     {
         if (coinText != null)
-            coinText.text = coins.ToString();
+        coinText.text = $"Here's your {coins} coins!";
     }
 
     private void HideResultPanels()

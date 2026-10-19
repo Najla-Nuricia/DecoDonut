@@ -24,9 +24,6 @@ public class GameManager : MonoBehaviour
     {
         customerCanvas.SetActive(true);
         kitchenCanvas.SetActive(false);
-
-        if (customerBubble != null)
-            customerBubble.ShowBubbles();
     }
 
     public void ShowKitchenCanvas()
@@ -55,6 +52,9 @@ public class GameManager : MonoBehaviour
         }
 
         orderManager.ShowOrder(customer.customerOrder);
+
+        if (customerBubble != null)
+            customerBubble.ShowBubbles();
     }
 
     public void CompleteOrder()
