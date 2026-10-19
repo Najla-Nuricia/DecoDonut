@@ -7,7 +7,7 @@ public class CustomerManager : MonoBehaviour
     [Header("UI Elements")]
     [SerializeField] private Image customerImageUI;
     [SerializeField] private TMP_Text customerNameUI;
-    [SerializeField] private Image orderBubbleUI;
+    
 
     [Header("Daily Customers")]
     [SerializeField] private CustomerSO[] dailyCustomers;
@@ -57,16 +57,7 @@ public class CustomerManager : MonoBehaviour
         customerNameUI.gameObject.SetActive(true);
 
         // Menampilkan gambar pesanan donat
-        if (newCustomer.customerOrder != null)
-        {
-            orderBubbleUI.sprite = newCustomer.customerOrder.donutImage;
-            orderBubbleUI.gameObject.SetActive(true);
-        }
-        else
-        {
-            orderBubbleUI.gameObject.SetActive(false);
-            Debug.LogWarning("Pelanggan tidak memiliki pesanan!");
-        }
+       
     }
 
     public void CompleteCurrentOrder()
@@ -89,6 +80,5 @@ public class CustomerManager : MonoBehaviour
 
         customerImageUI.gameObject.SetActive(false);
         customerNameUI.gameObject.SetActive(false);
-        orderBubbleUI.gameObject.SetActive(false);
     }
 }

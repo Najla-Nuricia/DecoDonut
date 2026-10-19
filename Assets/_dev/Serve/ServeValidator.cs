@@ -95,6 +95,18 @@ public class ServeValidator : MonoBehaviour
             return;
         }
 
+        GameManager gameManager = FindFirstObjectByType<GameManager>();
+
+        if (gameManager == null)
+        {
+            Debug.LogError(
+                "ServeValidator: GameManager tidak ditemukan untuk memperbarui order."
+            );
+            return;
+        }
+
+        gameManager.UpdateCurrentOrder();
+
         if (endDayPanel != null)
             endDayPanel.SetActive(false);
 
