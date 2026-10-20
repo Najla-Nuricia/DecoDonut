@@ -207,4 +207,13 @@ public class ServeValidator : MonoBehaviour
         if (endDayAnimation != null)
             endDayAnimation.PopUp();
     }
+
+    public void Clear()
+    {
+        if (isShowingResult)
+            return;
+
+        dropZone.ClearIngredients();
+    }
+
 }

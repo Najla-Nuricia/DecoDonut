@@ -313,7 +313,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 123921374}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 761377591}
+        m_TargetAssemblyTypeName: ServeValidator, Assembly-CSharp
+        m_MethodName: Clear
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &123921374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1742,6 +1754,8 @@ MonoBehaviour:
   toppingContainer: {fileID: 60617507}
   toppingPrefab: {fileID: 4570768696639266110, guid: d6ff423ec817c894e9af27e666c6ec71, type: 3}
   selectedIngredients: []
+  audioSource: {fileID: 0}
+  dropSound: {fileID: 8300000, guid: ee47a3ce12b48ac4d8702aac0dd11104, type: 3}
 --- !u!222 &705753173
 CanvasRenderer:
   m_ObjectHideFlags: 0

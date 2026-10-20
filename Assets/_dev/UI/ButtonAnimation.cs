@@ -18,6 +18,7 @@ public class UIButtonEffects : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip hoverSound;
     [SerializeField] private AudioClip clickSound;
+    
 
     private Dictionary<Button, Vector3> originalScales =
         new Dictionary<Button, Vector3>();
@@ -47,7 +48,7 @@ public class UIButtonEffects : MonoBehaviour
                 () => Hover(currentButton, false));
 
             AddEvent(trigger, EventTriggerType.PointerDown,
-                () => Animate(currentButton, clickScale));
+                () => Click(currentButton));
 
             AddEvent(trigger, EventTriggerType.PointerUp,
                 () => Hover(currentButton, false));
@@ -75,6 +76,16 @@ public class UIButtonEffects : MonoBehaviour
         Animate(button, isHover ? hoverScale : 1f);
     }
 
+    private void Click(Button button)
+    {
+        if (button == null || !button.interactable) return;
+
+        if (clickSound != null && audioSource != null)
+            audioSource.PlayOneShot(clickSound);
+
+        Animate(button, clickScale);
+    }
+
     private void Animate(Button button, float multiplier)
     {
         if (button == null) return;
@@ -97,4 +108,3 @@ public class UIButtonEffects : MonoBehaviour
         }
     }
 }
-

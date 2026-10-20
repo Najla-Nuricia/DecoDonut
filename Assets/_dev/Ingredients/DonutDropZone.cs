@@ -14,8 +14,18 @@ public class DonutDropZone : MonoBehaviour, IDropHandler
     [SerializeField]
     private List<IngredientSO> selectedIngredients = new();
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip dropSound;
+
     public IReadOnlyList<IngredientSO> SelectedIngredients
         => selectedIngredients;
+
+    private void Awake()
+    {
+        if (audioSource == null)
+            audioSource = gameObject.AddComponent<AudioSource>();
+    }
 
     public void OnDrop(PointerEventData eventData)
     {
@@ -63,6 +73,9 @@ public class DonutDropZone : MonoBehaviour, IDropHandler
 
         // Simpan ingredient untuk validasi resep
         selectedIngredients.Add(ingredient);
+
+        if (dropSound != null)
+            audioSource.PlayOneShot(dropSound);
 
         Debug.Log("Ingredient ditambahkan: " +
                   ingredient.ingredientName);
