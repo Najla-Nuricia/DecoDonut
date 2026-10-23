@@ -30,6 +30,7 @@ public class ServeValidator : MonoBehaviour
 
     private int coins;
     private bool isShowingResult;
+    private Coroutine resultCoroutine;
     public int Coins => coins;
 
     private void Start()
@@ -41,6 +42,15 @@ public class ServeValidator : MonoBehaviour
     {
         if (isShowingResult)
             return;
+
+        if (customerManager == null || dropZone == null)
+        {
+            Debug.LogError(
+                "ServeValidator: CustomerManager dan DonutDropZone harus diisi.",
+                this
+            );
+            return;
+        }
 
         CustomerSO customer = customerManager.CurrentCustomer;
 
@@ -77,16 +87,28 @@ public class ServeValidator : MonoBehaviour
         canvasTransition.ShowCustomer();
 
         isShowingResult = true;
-        StartCoroutine(ShowResultAfterDelay(isCorrect, order.rewardCoins));
+        StopResultCoroutine();
+        resultCoroutine = StartCoroutine(
+            ShowResultAfterDelay(isCorrect, order.rewardCoins)
+        );
     }
 
     public void ContinueToNextCustomer()
     {
+        StopResultCoroutine();
         isShowingResult = false;
 
         HideResultPanels();
 
-        dropZone.ClearIngredients();
+        if (dropZone != null)
+            dropZone.ClearIngredients();
+
+        if (customerManager == null)
+        {
+            Debug.LogError("ServeValidator: CustomerManager belum diisi.", this);
+            return;
+        }
+
         customerManager.CompleteCurrentOrder();
 
         if (customerManager.CurrentCustomer == null)
@@ -116,12 +138,19 @@ public class ServeValidator : MonoBehaviour
 
     public void RetryOrder()
     {
+        StopResultCoroutine();
         isShowingResult = false;
-        youLosePanel.SetActive(false);
-        dropZone.ClearIngredients();
+
+        HideResultPanels();
+
+        if (dropZone != null)
+            dropZone.ClearIngredients();
 
         // Slide dari Customer kembali ke Kitchen
-        canvasTransition.ShowKitchen();
+        if (canvasTransition != null)
+            canvasTransition.ShowKitchen();
+        else
+            Debug.LogError("ServeValidator: CanvasTransition belum diisi.", this);
     }
 
     public void GoToKitchen()
@@ -143,12 +172,12 @@ public class ServeValidator : MonoBehaviour
     private void HideResultPanels()
     {
         if (congratsAnimation != null)
-            congratsAnimation.PopDown();
+            congratsAnimation.HideImmediate();
         else if (congratsPanel != null)
             congratsPanel.SetActive(false);
 
         if (youLoseAnimation != null)
-            youLoseAnimation.PopDown();
+            youLoseAnimation.HideImmediate();
         else if (youLosePanel != null)
             youLosePanel.SetActive(false);
     }
@@ -156,6 +185,10 @@ public class ServeValidator : MonoBehaviour
     private IEnumerator ShowResultAfterDelay(bool isCorrect, int rewardCoins)
     {
         yield return new WaitForSeconds(Mathf.Max(0f, resultDelay));
+        resultCoroutine = null;
+
+        if (!isShowingResult)
+            yield break;
 
         if (isCorrect)
         {
@@ -216,10 +249,17 @@ public class ServeValidator : MonoBehaviour
 
     public void Clear()
     {
-        if (isShowingResult)
+        if (dropZone != null)
+            dropZone.ClearIngredients();
+    }
+
+    private void StopResultCoroutine()
+    {
+        if (resultCoroutine == null)
             return;
 
-        dropZone.ClearIngredients();
+        StopCoroutine(resultCoroutine);
+        resultCoroutine = null;
     }
 
 }

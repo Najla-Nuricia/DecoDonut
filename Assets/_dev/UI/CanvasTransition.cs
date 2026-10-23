@@ -14,6 +14,7 @@ public class CanvasTransition : MonoBehaviour
 [SerializeField] private float slideDistance;
 
 private bool isTransitioning;
+private int pendingDirection;
 
 private void Start()
 {
@@ -35,14 +36,25 @@ private void Start()
 
 public void ShowKitchen()
 {
-    if (!isTransitioning)
-        StartCoroutine(Transition(customerPanel, kitchenPanel, 1));
+    RequestTransition(1);
 }
 
 public void ShowCustomer()
 {
-    if (!isTransitioning)
-        StartCoroutine(Transition(kitchenPanel, customerPanel, -1));
+    RequestTransition(-1);
+}
+
+private void RequestTransition(int direction)
+{
+    if (isTransitioning)
+    {
+        pendingDirection = direction;
+        return;
+    }
+
+    RectTransform current = direction > 0 ? customerPanel : kitchenPanel;
+    RectTransform next = direction > 0 ? kitchenPanel : customerPanel;
+    StartCoroutine(Transition(current, next, direction));
 }
 
 private IEnumerator Transition(
@@ -148,6 +160,13 @@ private IEnumerator Transition(
     next.gameObject.SetActive(true);
 
     isTransitioning = false;
+
+    if (pendingDirection != 0)
+    {
+        int nextDirection = pendingDirection;
+        pendingDirection = 0;
+        RequestTransition(nextDirection);
+    }
 }
 
 

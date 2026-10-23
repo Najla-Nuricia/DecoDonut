@@ -1968,7 +1968,7 @@ MonoBehaviour:
   congratsAnimation: {fileID: 451616618}
   youLoseAnimation: {fileID: 1554866704}
   endDayAnimation: {fileID: 429830704}
-  resultDelay: 0.75
+  resultDelay: 1
   coinText: {fileID: 767222916}
 --- !u!1 &767222914
 GameObject:
@@ -3930,7 +3930,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 52, y: -48}
-  m_SizeDelta: {x: 160, y: 166.8278}
+  m_SizeDelta: {x: 132.5851, y: 138.243}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1203583053
 MonoBehaviour:
@@ -5221,11 +5221,11 @@ RectTransform:
   m_Children:
   - {fileID: 1697454746}
   - {fileID: 1889828286}
+  - {fileID: 1203583052}
   - {fileID: 1411698247}
   - {fileID: 451616615}
   - {fileID: 1554866701}
   - {fileID: 510688661}
-  - {fileID: 1203583052}
   m_Father: {fileID: 2073914334}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
