@@ -1970,6 +1970,7 @@ MonoBehaviour:
   endDayAnimation: {fileID: 429830704}
   resultDelay: 1
   coinText: {fileID: 767222916}
+  coinTotalText: {fileID: 1990969557}
 --- !u!1 &767222914
 GameObject:
   m_ObjectHideFlags: 0

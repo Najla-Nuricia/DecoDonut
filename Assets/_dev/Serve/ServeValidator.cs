@@ -27,15 +27,21 @@ public class ServeValidator : MonoBehaviour
 
     [Header("Coin UI")]
     [SerializeField] private TMP_Text coinText;
+    [SerializeField] private TMP_Text coinTotalText;
 
     private int coins;
     private bool isShowingResult;
     private Coroutine resultCoroutine;
     public int Coins => coins;
 
+    public int GetCoinTotal()
+    {
+        return coins;
+    }
+
     private void Start()
     {
-        UpdateCoinUI();
+        UpdateCoinTotal();
     }
 
     public void ValidateOrder()
@@ -163,10 +169,13 @@ public class ServeValidator : MonoBehaviour
         canvasTransition.ShowCustomer();
     }
 
-    private void UpdateCoinUI()
+    public void UpdateCoinTotal()
     {
         if (coinText != null)
         coinText.text = $"Here's your {coins} coins!";
+
+        if (coinTotalText != null)
+        coinTotalText.text = coins.ToString();
     }
 
     private void HideResultPanels()
@@ -204,7 +213,7 @@ public class ServeValidator : MonoBehaviour
                 Musicmanager.Instance.PlayWinSFX();
 
             coins += rewardCoins;
-            UpdateCoinUI();
+            UpdateCoinTotal();
         }
         else
         {
