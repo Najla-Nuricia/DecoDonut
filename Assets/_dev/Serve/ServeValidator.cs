@@ -167,6 +167,9 @@ public class ServeValidator : MonoBehaviour
             else if (congratsPanel != null)
                 congratsPanel.SetActive(true);
 
+            if (Musicmanager.Instance != null)
+                Musicmanager.Instance.PlayWinSFX();
+
             coins += rewardCoins;
             UpdateCoinUI();
         }
@@ -179,6 +182,9 @@ public class ServeValidator : MonoBehaviour
                 youLoseAnimation.PopUp();
             else if (youLosePanel != null)
                 youLosePanel.SetActive(true);
+
+            if (Musicmanager.Instance != null)
+                Musicmanager.Instance.PlayLoseSFX();
         }
     }
 

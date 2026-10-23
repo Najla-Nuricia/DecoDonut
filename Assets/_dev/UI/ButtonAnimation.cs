@@ -14,20 +14,11 @@ public class UIButtonEffects : MonoBehaviour
     [SerializeField] private float clickScale = 0.9f;
     [SerializeField] private float duration = 0.15f;
 
-    [Header("Audio")]
-    [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioClip hoverSound;
-    [SerializeField] private AudioClip clickSound;
-    
-
     private Dictionary<Button, Vector3> originalScales =
         new Dictionary<Button, Vector3>();
 
     private void Start()
     {
-        if (audioSource == null)
-            audioSource = gameObject.AddComponent<AudioSource>();
-
         foreach (Button button in uiButtons)
         {
             if (button == null) continue;
@@ -70,8 +61,8 @@ public class UIButtonEffects : MonoBehaviour
     {
         if (button == null || !button.interactable) return;
 
-        if (isHover && hoverSound != null && audioSource != null)
-            audioSource.PlayOneShot(hoverSound);
+        if (isHover && Musicmanager.Instance != null)
+            Musicmanager.Instance.PlayButtonHoverSFX();
 
         Animate(button, isHover ? hoverScale : 1f);
     }
@@ -80,8 +71,8 @@ public class UIButtonEffects : MonoBehaviour
     {
         if (button == null || !button.interactable) return;
 
-        if (clickSound != null && audioSource != null)
-            audioSource.PlayOneShot(clickSound);
+        if (Musicmanager.Instance != null)
+            Musicmanager.Instance.PlayButtonClickSFX();
 
         Animate(button, clickScale);
     }
