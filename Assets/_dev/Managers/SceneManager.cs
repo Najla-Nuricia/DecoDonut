@@ -5,15 +5,18 @@ public class SceneManager : MonoBehaviour
     [Header("Scene Names")]
     [SerializeField] private string mainMenuSceneName = "MainMenu";
     [SerializeField] private string gameplaySceneName = "Gameplay";
+    [SerializeField] private string loadingSceneName = "Loading";
+
+    public static string PendingSceneName { get; private set; }
 
     public void LoadMainMenu()
     {
-        LoadScene(mainMenuSceneName);
+        LoadSceneWithLoading(mainMenuSceneName);
     }
 
     public void LoadGameplay()
     {
-        LoadScene(gameplaySceneName);
+        LoadSceneWithLoading(gameplaySceneName);
     }
 
     public void ReloadCurrentScene()
@@ -23,10 +26,36 @@ public class SceneManager : MonoBehaviour
 
     public void LoadScene(string sceneName)
     {
+        if (!CanLoadScene(sceneName))
+            return;
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+    }
+
+    private void LoadSceneWithLoading(string sceneName)
+    {
+        if (!CanLoadScene(sceneName))
+            return;
+
+        if (!CanLoadScene(loadingSceneName))
+        {
+            Debug.LogError(
+                $"Loading scene '{loadingSceneName}' cannot be loaded. " +
+                "Make sure it has been added to Build Settings.",
+                this);
+            return;
+        }
+
+        PendingSceneName = sceneName;
+        UnityEngine.SceneManagement.SceneManager.LoadScene(loadingSceneName);
+    }
+
+    private bool CanLoadScene(string sceneName)
+    {
         if (string.IsNullOrWhiteSpace(sceneName))
         {
             Debug.LogError("Nama scene tidak boleh kosong.", this);
-            return;
+            return false;
         }
 
         if (!Application.CanStreamedLevelBeLoaded(sceneName))
@@ -34,10 +63,10 @@ public class SceneManager : MonoBehaviour
             Debug.LogError(
                 $"Scene '{sceneName}' tidak dapat dimuat. Pastikan scene sudah ditambahkan ke Build Settings.",
                 this);
-            return;
+            return false;
         }
 
-        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+        return true;
     }
 
     public void QuitGame()

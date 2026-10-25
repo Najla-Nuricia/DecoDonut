@@ -1696,6 +1696,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SceneManager
   mainMenuSceneName: MainMenu
   gameplaySceneName: Gameplay
+  loadingSceneName: Loading
 --- !u!1 &692279798
 GameObject:
   m_ObjectHideFlags: 0
@@ -6300,7 +6301,7 @@ MonoBehaviour:
   fadeDuration: 1
   playOnStart: 1
   buttonHoverSound: {fileID: 8300000, guid: 9c5f0db39fe600e4c832edf4a8951cf3, type: 3}
-  buttonClickSound: {fileID: 8300000, guid: ee47a3ce12b48ac4d8702aac0dd11104, type: 3}
+  buttonClickSound: {fileID: 0}
   winSound: {fileID: 8300000, guid: e0ed3d3f65364644b8abd7aaf30e5b4f, type: 3}
   loseSound: {fileID: 8300000, guid: 3b9554e83a20b2447bc09b57044c8b14, type: 3}
   sfxVolume: 1
