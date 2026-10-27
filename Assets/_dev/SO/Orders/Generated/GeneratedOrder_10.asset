@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3640e0d6057862c4199dc8f80cb60193, type: 3}
+  m_Name: GeneratedOrder_10
+  m_EditorClassIdentifier: Assembly-CSharp::OrderSO
+  orderName: Order 10 - Donut original
+  donutImage: {fileID: 21300000, guid: 0e7ec0eed49a0fc4f9fc9732fbf8251c, type: 3}
+  recipeIngredients:
+  - {fileID: 11400000, guid: df558bb2b8d9a5045a881d37fdc756cf, type: 2}
+  - {fileID: 11400000, guid: 05e3dd0bd621e6748b1ca06f83bac517, type: 2}
+  - {fileID: 11400000, guid: 2f1570baf24c811438fe1b2adc506853, type: 2}
+  - {fileID: 11400000, guid: 3b3dd6ce71de61447984d216e66dcbcb, type: 2}
+  - {fileID: 11400000, guid: 61abdc31eef7c7d43bc7594d75a7af1c, type: 2}
+  - {fileID: 11400000, guid: 73be0c7bfe950c140a35842a0b8b499a, type: 2}
+  - {fileID: 11400000, guid: 77a9f68775c18e349974d77fd53391a1, type: 2}
+  rewardCoins: 48
